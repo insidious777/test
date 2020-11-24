@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { BrowserRouter as Router, Route, NavLink, Redirect} from "react-router-dom";
+import {useSelector} from 'react-redux'
+import Login from "./pages/Login/Login"
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+ const isLoggined = useSelector(state => state.isLoggined);
+  return(
+    <div>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/news">News</NavLink>
+        <NavLink to="/profile">Profile</NavLink>
 
+        <Route exact path="/">
+          <h1>Home</h1>
+        </Route>
+        <Route path="/login">
+          <Login/>
+        </Route>
+        <Route path="/news">
+          <h1>News</h1>
+        </Route>
+        <Route path="/profile">
+          {isLoggined?<h1>Profile</h1>:<Redirect to="login"/>}
+        </Route>
+  
+      </div>
+  )
+}
 export default App;
